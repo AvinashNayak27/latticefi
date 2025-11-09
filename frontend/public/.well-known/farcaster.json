@@ -1,0 +1,18 @@
+{
+    "accountAssociation": {
+      "header": "eyJmaWQiOjI2NTUwNCwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweGY3ZDQwNDFlNzUxRTBiNGY2ZUE3MkViODJGMmIyMDBEMjc4NzA0QTQifQ",
+      "payload": "eyJkb21haW4iOiJsYXR0aWNlZmkudmVyY2VsLmFwcCJ9",
+      "signature": "fBMUpmhR7H1Fqe+ZVeOiBU2bw9icc9LamySMEmOh9wM+rClu2x9MQp6gTQ9WTtSbNmiipL3NLT7+w+9pE7obRRw="
+    },
+    "frame": {
+      "version": "1",
+      "name": "Lattice",
+      "iconUrl": "https://latticefi.vercel.app/logo.png",
+      "homeUrl": "https://latticefi.vercel.app",
+      "imageUrl": "https://latticefi.vercel.app/og-image.png",
+      "buttonTitle": "Check this out",
+      "splashImageUrl": "https://latticefi.vercel.app/logo.png",
+      "splashBackgroundColor": "#ffffff",
+      "webhookUrl": "https://api.neynar.com/f/app/29499eb0-2d1e-4f10-809d-226fa3c1ebec/event"
+    }
+  }
