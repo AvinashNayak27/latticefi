@@ -1,0 +1,7 @@
+avantis-trader-sdk==0.8.10
+fastapi
+uvicorn[standard]
+pydantic
+pydantic-settings
+httpx
+
