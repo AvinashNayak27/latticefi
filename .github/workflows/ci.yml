@@ -1,0 +1,105 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  backend-tests:
+    name: Backend Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        working-directory: ./backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio httpx
+      
+      - name: Run backend tests
+        working-directory: ./backend
+        run: |
+          pytest ../tests/backend/ -v --tb=short
+      
+      - name: Check code formatting
+        working-directory: ./backend
+        run: |
+          pip install black
+          black --check src/ || true
+
+  frontend-tests:
+    name: Frontend Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: pnpm install
+      
+      - name: Run frontend tests
+        working-directory: ./frontend
+        run: pnpm test
+      
+      - name: Type check
+        working-directory: ./frontend
+        run: pnpm exec tsc --noEmit
+      
+      - name: Build check
+        working-directory: ./frontend
+        run: pnpm build
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: pnpm install
+      
+      - name: Run ESLint (if configured)
+        working-directory: ./frontend
+        run: |
+          if [ -f ".eslintrc" ] || [ -f ".eslintrc.js" ] || [ -f ".eslintrc.json" ]; then
+            pnpm exec eslint . --ext .ts,.tsx || true
+          else
+            echo "ESLint not configured, skipping..."
+          fi
+
